@@ -25,6 +25,7 @@ public:
 		colorMapShader.begin();
 		colorMapShader.setUniformTexture( "colorTex", color, 0 );
 		colorMapShader.setUniformTexture( "grayTex", gray, 1 );
+		colorMapShader.setUniform1i( "colormapWidth", color.getWidth() );
 		ofPushMatrix();
 
 		ofTranslate( ofGetWidth() / 2, ofGetHeight() / 2 );
