@@ -2,6 +2,18 @@
 
 This is a small utility to map grayscale textures to colormaps. It's nothing more than a GPU version of this: https://github.com/luteberget/ofxColorMap
 
+It takes this grayscale image
+
+![gray](https://raw.githubusercontent.com/mrzl/ofxColorMapGPU/master/example/ofxColorMapGPUExample/bin/data/gray.png)
+
+uses this colormap
+
+![colormap](https://raw.githubusercontent.com/mrzl/ofxColorMapGPU/master/example/ofxColorMapGPUExample/bin/data/colormaps/colormap1.png)
+
+and creates this:
+
+![result](https://raw.githubusercontent.com/mrzl/ofxColorMapGPU/master/example/ofxColorMapGPUExample/bin/data/colormap_result.png)
+
 The interesting bit is the fragment shader:
 ```
 #version 150
