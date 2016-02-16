@@ -35,6 +35,9 @@ public:
 			ofLogWarning() << "ofxColorMapGPU: lerped value should be normalized. Currently it is: " << lerp;
 			lerp = 0.0;
 		}
+
+		plane.setWidth( ofGetWidth() );
+		plane.setHeight( ofGetHeight() );
 		
 		colorMapShader.begin();
 		colorMapShader.setUniformTexture( "colorTex1", color1, 0 );
