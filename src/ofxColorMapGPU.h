@@ -21,11 +21,18 @@ public:
 	}
 
 public:
-	void draw( ofTexture & gray, ofTexture & color ) {
+
+	void draw( ofTexture & gray, ofTexture & color1, ofTexture & color2, float lerp ) {
+		if( color1.getWidth() != color2.getWidth() || color1.getWidth() != color2.getWidth() ) {
+			ofLogWarning() << "ofxColorMapGPU: the two color maps are not of equal size. Unwanted things may happen..";
+		}
+		
 		colorMapShader.begin();
-		colorMapShader.setUniformTexture( "colorTex", color, 0 );
-		colorMapShader.setUniformTexture( "grayTex", gray, 1 );
-		colorMapShader.setUniform1i( "colormapWidth", color.getWidth() );
+		colorMapShader.setUniformTexture( "colorTex1", color1, 0 );
+		colorMapShader.setUniformTexture( "colorTex2", color2, 1 );
+		colorMapShader.setUniformTexture( "grayTex", gray, 2 );
+		colorMapShader.setUniform1f( "lerpToToColor", lerp );
+		colorMapShader.setUniform1i( "colormapWidth", color1.getWidth() );
 		ofPushMatrix();
 
 		ofTranslate( ofGetWidth() / 2, ofGetHeight() / 2 );
