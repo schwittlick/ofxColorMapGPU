@@ -12,19 +12,28 @@ public:
 
 		int planeWidth = ofGetWidth();
 		int planeHeight = ofGetHeight();
-		int planeGridSize = 4;
-		int planeColumns = planeWidth / planeGridSize;
-		int planeRows = planeHeight / planeGridSize;
 
-		plane.set( planeWidth, planeHeight, planeColumns, planeRows, OF_PRIMITIVE_TRIANGLES );
+		plane.set( planeWidth, planeHeight, 2, 2, OF_PRIMITIVE_TRIANGLES );
 		plane.mapTexCoords( 0, 0, ofGetWidth(), ofGetHeight() );
 	}
 
 public:
 
+	/*
+		texture gray is being substituted by the colormaps color1&color2. these are interpolated by the normalized lerp parameter
+	*/
 	void draw( ofTexture & gray, ofTexture & color1, ofTexture & color2, float lerp ) {
 		if( color1.getWidth() != color2.getWidth() || color1.getWidth() != color2.getWidth() ) {
 			ofLogWarning() << "ofxColorMapGPU: the two color maps are not of equal size. Unwanted things may happen..";
+		}
+
+		if( lerp > 1.0 ) {
+			ofLogWarning() << "ofxColorMapGPU: lerped value should be normalized. Currently it is: " << lerp;
+			lerp = 1.0;
+		}
+		else if( lerp < 0.0 ) {
+			ofLogWarning() << "ofxColorMapGPU: lerped value should be normalized. Currently it is: " << lerp;
+			lerp = 0.0;
 		}
 		
 		colorMapShader.begin();
@@ -39,5 +48,12 @@ public:
 		plane.draw();
 		ofPopMatrix();
 		colorMapShader.end();
+	}
+
+	/*
+		using only one colormap
+	*/
+	void draw( ofTexture & gray, ofTexture & color ) {
+		draw( gray, color, color, 1.0 );
 	}
 };
